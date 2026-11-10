@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm So Sorry, Sumu ❤️🩹</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Quicksand -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Quicksand"', 'sans-serif'],
+                    },
+                    colors: {
+                        cream: '#FFF9F5',
+                        blush: '#FFE4E8',
+                        roseSoft: '#F9A8B8',
+                        roseDeep: '#E15A78',
+                        cocoa: '#5C3A42',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FFF9F5;
+            color: #5C3A42;
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Floating Hearts Background Animation */
+        .floating-heart {
+            position: fixed;
+            bottom: -10vh;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatUp linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.6;
+            }
+            85% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-120vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Gentle bounce for the cute SVG bear */
+        @keyframes gentleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-bounce-slow {
+            animation: gentleBounce 3s ease-in-out infinite;
+        }
+
+        /* Heartbeat animation */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.12); }
+            40% { transform: scale(1); }
+            60% { transform: scale(1.12); }
+        }
+        .animate-heartbeat {
+            animation: heartbeat 1.8s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        /* 3D Card Flip Styles */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 60;
+        }
+
+        /* Smooth modal fade */
+        .modal-enter {
+            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.85); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-roseSoft selection:text-white">
+
+    <!-- Floating Hearts Container -->
+    <div id="hearts-bg" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Main Content Wrapper -->
+    <main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-16 sm:space-y-24">
+
+        <!-- 1. HERO SECTION WITH CUSTOM BLUSHING BEAR SVG -->
+        <section class="text-center space-y-6 pt-4">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-blush text-roseDeep font-semibold text-xs sm:text-sm tracking-wide shadow-sm">
+                For my favorite person in the world ✨
+            </div>
+
+            <!-- Custom SVG Illustration: Blushing Bear Holding a Heart -->
+            <div class="flex justify-center my-4">
+                <div class="w-48 h-48 sm:w-56 sm:h-56 animate-bounce-slow drop-shadow-md">
+                    <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                        <!-- Left Ear -->
+                        <circle cx="58" cy="60" r="24" fill="#D8A790"/>
+                        <circle cx="58" cy="60" r="13" fill="#F7C5CC"/>
+                        <!-- Right Ear -->
+                        <circle cx="162" cy="60" r="24" fill="#D8A790"/>
+                        <circle cx="162" cy="60" r="13" fill="#F7C5CC"/>
+                        
+                        <!-- Body -->
+                        <ellipse cx="110" cy="165" rx="52" ry="42" fill="#D8A790"/>
+                        <ellipse cx="110" cy="168" rx="34" ry="28" fill="#FBE8E0"/>
+                        
+                        <!-- Head -->
+                        <ellipse cx="110" cy="100" rx="60" ry="52" fill="#E3B7A0"/>
+                        
+                        <!-- Snout -->
+                        <ellipse cx="110" cy="112" rx="22" ry="17" fill="#FFF3EE"/>
+                        <!-- Cute Nose -->
+                        <ellipse cx="110" cy="106" rx="7" ry="5" fill="#5C3A42"/>
+                        <!-- Sad/Pleading Mouth -->
+                        <path d="M103 118 Q110 113 117 118" stroke="#5C3A42" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        
+                        <!-- Eyes (Puppy-dog eyes) -->
+                        <circle cx="85" cy="92" r="6.5" fill="#5C3A42"/>
+                        <circle cx="83" cy="89.5" r="2.2" fill="#FFFFFF"/>
+                        <circle cx="135" cy="92" r="6.5" fill="#5C3A42"/>
+                        <circle cx="133" cy="89.5" r="2.2" fill="#FFFFFF"/>
+                        
+                        <!-- Blushing Cheeks -->
+                        <ellipse cx="68" cy="105" rx="10" ry="6" fill="#FF8FA3" opacity="0.65"/>
+                        <ellipse cx="152" cy="105" rx="10" ry="6" fill="#FF8FA3" opacity="0.65"/>
+                        
+                        <!-- Paws holding the heart -->
+                        <circle cx="76" cy="158" r="14" fill="#D8A790"/>
+                        <circle cx="144" cy="158" r="14" fill="#D8A790"/>
+                        
+                        <!-- Big Heart -->
+                        <g class="animate-heartbeat">
+                            <path d="M110 182 C110 182 78 162 78 142 C78 130 88 122 98 122 C104 122 108 126 110 130 C112 126 116 122 122 122 C132 122 142 130 142 142 C142 162 110 182 110 182 Z" fill="#E15A78"/>
+                            <!-- Heart Shine -->
+                            <path d="M88 136 C88 132 92 129 96 129" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-cocoa leading-tight">
+                I'm So Sorry, <span class="text-roseDeep italic">Sumu</span> 🥺
+            </h1>
+            <p class="max-w-xl mx-auto text-base sm:text-lg text-cocoa/80 font-medium">
+              I am sorry pakhi, and seeing you upset hurts my heart. Please take a moment to read this...
+            </p>
+        </section>
+
+        <!-- 2. HEARTFELT APOLOGY LETTER -->
+        <section class="bg-white/80 backdrop-blur-md rounded-3xl p-6 sm:p-10 md:p-12 shadow-[0_10px_40px_-15px_rgba(225,90,120,0.2)] border border-blush relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-blush/40 rounded-bl-full -z-10"></div>
+            <div class="absolute bottom-0 left-0 w-24 h-24 bg-blush/40 rounded-tr-full -z-10"></div>
+
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-2xl">💌</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-cocoa">Dear Sumu,</h2>
+            </div>
+
+            <div class="space-y-4 text-base sm:text-lg leading-relaxed text-cocoa/90 font-medium">
+                <p>
+                    I know I can be silly sometimes and say or do things without thinking, and I am truly sorry for hurting you. You mean the absolute world to me, and the last thing I ever want to be is the reason behind your frown.
+                </p>
+                <p>
+                    Every moment with you is precious to me. Your smile literally lights up my entire day, and when you're mad or sad, everything feels a little bit grey. I promise to listen better, be more patient.
+                </p>
+                <p class="font-serif italic text-roseDeep text-lg sm:text-xl pt-2">
+                    Please forgive this idiot who loves you more than words can ever say. ❤️
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. INTERACTIVE FLIP CARDS: WHY YOU MEAN EVERYTHING TO ME -->
+        <section class="space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-cocoa">
+                    Why You Mean Everything to Me
+                </h2>
+                <p class="text-sm sm:text-base text-cocoa/70 font-medium">
+                    Tap each card to reveal a little secret ✨
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="flip-card perspective-1000 h-56 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-blush to-white border-2 border-roseSoft/40 shadow-md flex flex-col items-center justify-center p-6 text-center">
+                            <span class="text-4xl mb-3">🌸</span>
+                            <h3 class="font-serif text-xl font-bold text-cocoa">Your Smile</h3>
+                            <p class="text-xs text-roseDeep mt-2 font-semibold uppercase tracking-wider">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-roseDeep text-white shadow-lg flex flex-col items-center justify-center p-6 text-center">
+                            <p class="font-medium text-base leading-relaxed">
+                                "Your smile is my favorite sight in the entire universe. It instantly makes all my stress disappear."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card perspective-1000 h-56 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-blush to-white border-2 border-roseSoft/40 shadow-md flex flex-col items-center justify-center p-6 text-center">
+                            <span class="text-4xl mb-3">🧸</span>
+                            <h3 class="font-serif text-xl font-bold text-cocoa">Your Kindness</h3>
+                            <p class="text-xs text-roseDeep mt-2 font-semibold uppercase tracking-wider">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-roseDeep text-white shadow-lg flex flex-col items-center justify-center p-6 text-center">
+                            <p class="font-medium text-base leading-relaxed">
+                                "You have the softest, purest heart. Thank you for always caring so deeply and being so patient with me."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card perspective-1000 h-56 cursor-pointer sm:col-span-2 lg:col-span-1" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-gradient-to-br from-blush to-white border-2 border-roseSoft/40 shadow-md flex flex-col items-center justify-center p-6 text-center">
+                            <span class="text-4xl mb-3">🍓</span>
+                            <h3 class="font-serif text-xl font-bold text-cocoa">Our Future</h3>
+                            <p class="text-xs text-roseDeep mt-2 font-semibold uppercase tracking-wider">Tap to flip</p>
+                        </div>
+                        <div class="flip-card-back bg-roseDeep text-white shadow-lg flex flex-col items-center justify-center p-6 text-center">
+                            <p class="font-medium text-base leading-relaxed">
+                                "No matter how many silly fights we have, I always want to make up and choose you, today and every day and forever."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PLAYFUL "DO YOU FORGIVE ME?" SECTION -->
+        <section id="forgive-section" class="bg-white/90 backdrop-blur-md rounded-3xl p-8 sm:p-12 shadow-[0_10px_40px_-15px_rgba(225,90,120,0.25)] border border-blush text-center space-y-8 relative overflow-hidden">
+            <div class="space-y-2">
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-cocoa">
+                    So... Do You Forgive Me, Sumu? 🥺
+                </h2>
+                <p id="pleading-subtitle" class="text-cocoa/75 font-medium text-base sm:text-lg">
+                   plz forgive me,plzzzzz pakhi!!!!!
+                </p>
+            </div>
+
+            <!-- Interactive Buttons Container -->
+            <div id="button-arena" class="relative min-h-[140px] sm:min-h-[120px] flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+                <!-- YES Button -->
+                <button id="yes-btn" onclick="handleForgive()" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-roseDeep to-pink-500 text-white font-bold text-lg shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 z-20 cursor-pointer">
+                    Yes, I forgive you ❤️
+                </button>
+
+                <!-- NO Button (Dodges on hover/click) -->
+                <button id="no-btn" class="px-7 py-4 rounded-2xl bg-blush text-cocoa font-bold text-lg shadow-md hover:bg-roseSoft/40 transition-all duration-200 z-10 cursor-pointer">
+                    No, still mad 😤
+                </button>
+            </div>
+        </section>
+
+        <footer class="text-center text-sm text-cocoa/60 pb-6 font-medium">
+            Made with all my love, just for Sumu ❤️
+        </footer>
+    </main>
+
+    <!-- CELEBRATION MODAL -->
+    <div id="celebration-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-cocoa/40 backdrop-blur-sm p-4">
+        <div class="modal-enter bg-cream border-4 border-blush rounded-3xl max-w-md w-full p-8 text-center shadow-2xl space-y-6 relative">
+            <div class="text-6xl animate-bounce">🥰💖🎉</div>
+            <h3 class="font-serif text-3xl sm:text-4xl font-bold text-roseDeep">
+                Thank You, Sumu!
+            </h3>
+            <p class="text-cocoa font-medium text-lg leading-relaxed">
+                I love you so much! You just made me the happiest person alive. Now come here and let me give you a hug! 🤗❤️
+            </p>
+            <button onclick="closeModal()" class="w-full py-3.5 rounded-2xl bg-roseDeep text-white font-bold text-lg shadow-md hover:bg-pink-600 transition-colors cursor-pointer">
+                Love You Too ❤️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. FLOATING HEARTS BACKGROUND ---
+        function createFloatingHearts() {
+            const container = document.getElementById('hearts-bg');
+            const heartSymbols = ['❤️', '💖', '💕', '🌸', '💗'];
+            const heartCount = 18;
+
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('floating-heart');
+                heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                
+                // Randomize position, size, and animation duration
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 16 + 14) + 'px';
+                heart.style.animationDuration = (Math.random() * 8 + 8) + 's';
+                heart.style.animationDelay = (Math.random() * 8) + 's';
+                
+                container.appendChild(heart);
+            }
+        }
+
+        // --- 2. PLAYFUL "NO" BUTTON DODGE LOGIC ---
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const arena = document.getElementById('button-arena');
+        const subtitle = document.getElementById('pleading-subtitle');
+
+        const pleadingPhrases = [
+            "Are you sure? 🥺",
+            "I'll get you treats! 🍫🍓",
+            "Pretty please? 🙏",
+            "Don't break my heart 💔",
+            "Okay, one more hug? 🤗",
+            "You can't stay mad forever! 😘"
+        ];
+
+        let dodgeCount = 0;
+        let yesScale = 1;
+
+        function dodgeNoButton(e) {
+            if (e) e.preventDefault();
+            dodgeCount++;
+
+            // Change No button text
+            noBtn.innerText = pleadingPhrases[dodgeCount % pleadingPhrases.length];
+
+            // Grow Yes button slightly (capped at 1.45x so it doesn't break layout)
+            if (yesScale < 1.45) {
+                yesScale += 0.08;
+                yesBtn.style.transform = `scale(${yesScale})`;
+            }
+
+            // Calculate safe random position inside the arena
+            const arenaRect = arena.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+
+            const maxX = Math.max(20, arenaRect.width - btnRect.width - 20);
+            const maxY = Math.max(20, arenaRect.height - btnRect.height - 20);
+
+            const randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+            const randomY = Math.floor(Math.random() * maxY) - (maxY / 2);
+
+            noBtn.style.position = 'relative';
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        // Trigger dodge on hover (desktop) and touch/click (mobile)
+        noBtn.addEventListener('mouseenter', dodgeNoButton);
+        noBtn.addEventListener('touchstart', dodgeNoButton, { passive: false });
+        noBtn.addEventListener('click', dodgeNoButton);
+
+        // --- 3. CELEBRATION & CONFETTI ---
+        function handleForgive() {
+            const modal = document.getElementById('celebration-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            launchConfetti();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('celebration-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Lightweight Canvas Confetti
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const colors = ['#E15A78', '#F9A8B8', '#FFD166', '#FF8FA3', '#FFFFFF'];
+            const particles = [];
+
+            for (let i = 0; i < 130; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    w: Math.random() * 10 + 6,
+                    h: Math.random() * 6 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedY: Math.random() * 4 + 3,
+                    speedX: Math.random() * 3 - 1.5,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 8 - 4
+                });
+            }
+
+            let animationFrameId;
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let activeParticles = 0;
+
+                particles.forEach(p => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.rotation += p.rotationSpeed;
+
+                    if (p.y < canvas.height + 20) {
+                        activeParticles++;
+                        ctx.save();
+                        ctx.translate(p.x, p.y);
+                        ctx.rotate((p.rotation * Math.PI) / 180);
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                        ctx.restore();
+                    }
+                });
+
+                if (activeParticles > 0) {
+                    animationFrameId = requestAnimationFrame(draw);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    cancelAnimationFrame(animationFrameId);
+                }
+            }
+            draw();
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            createFloatingHearts();
+        };
+
+        // Resize confetti canvas if window resizes
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('confetti-canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
